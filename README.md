@@ -1,0 +1,2 @@
+# amazonurl_to_csv_conversion
+Amazon商品URLをCSVに変換する
