@@ -9,11 +9,12 @@ url_array = [
   'https://www.amazon.co.jp/SUNOGE-%E3%83%90%E3%83%83%E3%82%AF%E3%83%91%E3%83%83%E3%82%AF-%E3%83%AA%E3%83%A5%E3%83%83%E3%82%AF%E3%82%B5%E3%83%83%E3%82%AF-%E3%83%93%E3%82%B8%E3%83%8D%E3%82%B9%E3%83%AA%E3%83%A5%E3%83%83%E3%82%AF-%E3%83%A9%E3%83%83%E3%83%97%E3%83%88%E3%83%83%E3%83%97%E3%83%90%E3%83%83%E3%82%B0/dp/B08XHS9FQP'
 ]
 
-CSV.open('amazon_goods.csv', 'w') do |f|
-  f << ["商品ID", "商品名"]
-end
+HEADER = ["商品ID", "商品名"]
 
-url_array.each { |url|
+#URLごとにcsvに追記していく
+CSV.open('amazon_goods.csv', 'a') do |f|
+  f << HEADER
+  url_array.each { |url|
   #URLをデコードする
   decoded_url = URI.decode_www_form_component(url)
   #プロトコルとホスト名部分を削除する
@@ -24,8 +25,8 @@ url_array.each { |url|
   item_info.delete_at(1)
   #ID,商品名の順番になるように要素を逆にする
   item_info = item_info.reverse
-  #URLごとにcsvに追記していく
-  CSV.open('amazon_goods.csv', 'a') do |f|
     f << item_info
-  end
-}
+  }
+end
+
+
